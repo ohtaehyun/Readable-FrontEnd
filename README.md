@@ -7,7 +7,7 @@
 - Typescript
 - Code Formater - Eslint, Prettier
 - Axios
-- Redux or Recoil (미정)
+- ~~Redux or Recoil (미정)~~ Recoil
 - Mui
 - 계속 추가예정..
 
