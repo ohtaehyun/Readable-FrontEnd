@@ -9,8 +9,6 @@ const MainLayout: React.FC = () => {
   const handleIndexChange = (event: React.SyntheticEvent<Element, Event>, newIdx: string) => {
     setIdx(newIdx);
     navigation(newIdx);
-
-    console.log(newIdx);
   };
 
   return (
