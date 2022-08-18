@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import { Box, Tab, Tabs } from '@mui/material';
+import { Box, Button, Tab, Tabs } from '@mui/material';
 
 const MainLayout: React.FC = () => {
   const [idx, setIdx] = useState<string>('/');
@@ -19,7 +19,7 @@ const MainLayout: React.FC = () => {
           bgcolor: 'background.paper',
           width: '100%',
           display: 'flex',
-          justifyContent: 'center'
+          justifyContent: 'space-between'
         }}
       >
         <Tabs
@@ -34,6 +34,7 @@ const MainLayout: React.FC = () => {
           <Tab label="Item Three" value={'/dd'} />
           <Tab label="Item Four" value={'/test'} />
         </Tabs>
+        <Button>Login|UserInfo</Button>
       </Box>
       <Box
         sx={{
