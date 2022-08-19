@@ -31,7 +31,6 @@ const MainLayout: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log('hi');
     if (!matches) {
       setShowSideMenu(false);
     }
