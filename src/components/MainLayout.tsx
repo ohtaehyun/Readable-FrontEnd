@@ -1,16 +1,6 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Box,
-  Button,
-  FormControlLabel,
-  Menu,
-  Slide,
-  Switch,
-  Tab,
-  Tabs,
-  useMediaQuery
-} from '@mui/material';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Box, Button, Slide, Tab, Tabs, Typography, useMediaQuery } from '@mui/material';
 import styled from '@emotion/styled';
 import { MainMenuItemList } from '../constants/mainMenuItemList';
 
@@ -63,20 +53,27 @@ const MainLayout: React.FC = () => {
   return (
     <Box>
       {/* 사이드메뉴, 따로 함수로 빼면 매번 재선언되어서 out animation이 정상 동작하지 않아 직접기입 */}
-      <SideMenuContainer
-        onExit={() => console.log('exit')}
-        onExiting={() => console.log('exit')}
-        mountOnEnter
-        appear
-        unmountOnExit
-        direction="left"
-        in={showSideMenu}
-      >
+      <SideMenuContainer mountOnEnter unmountOnExit direction="left" in={showSideMenu}>
         <Box>
           {MainMenuItemList.map(item => (
-            <li key={item.url}>
-              <Link to={item.url}>{item.name}</Link>
-            </li>
+            <Fragment key={item.url}>
+              <CustomLink
+                onClick={() => {
+                  handleShowSideMenu();
+                  setIdx(item.url);
+                }}
+                to={item.url}
+              >
+                <Typography
+                  fontWeight={'bold'}
+                  color={item.url === idx ? 'red' : 'black'}
+                  variant="h4"
+                  gutterBottom
+                >
+                  {item.name}
+                </Typography>
+              </CustomLink>
+            </Fragment>
           ))}
         </Box>
       </SideMenuContainer>
@@ -107,10 +104,11 @@ const SideMenuContainer = styled(Slide)`
   width: 200px;
   height: 100%;
   right: 0px;
-  top: 49px;
   padding: 20px;
+  padding-top: 48px;
   background-color: white;
-  border-left: 1px solid black;
+  box-shadow: 4px 2px 10px #dddd inset;
+  border-radius: 8px;
 `;
 
 const NavBarContainer = styled(Box)`
@@ -120,6 +118,9 @@ const NavBarContainer = styled(Box)`
   height: 48px;
   display: flex;
   justify-content: space-between;
-  height: 48px;
-  border-bottom: 1px solid black;
+`;
+
+const CustomLink = styled(Link)`
+  text-decoration: none;
+  margin-bottom: 24px;
 `;
