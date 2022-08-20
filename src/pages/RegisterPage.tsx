@@ -99,7 +99,6 @@ const RegisterPage: React.FC = () => {
               id="name"
               label="Name"
               name="name"
-              autoFocus
               onChange={handleChange}
             />
             <TextField
@@ -110,7 +109,6 @@ const RegisterPage: React.FC = () => {
               label="Password"
               name="password"
               type="password"
-              autoFocus
               error={!passwordValidState}
               onChange={handleChange}
               helperText={passwordValidState ? '' : '잘못된 비밀번호 형식입니다.'}
@@ -123,7 +121,6 @@ const RegisterPage: React.FC = () => {
               label="Password Check"
               name="passwordCheck"
               type="password"
-              autoFocus
               error={!passwordCheckValidState}
               onChange={handleChange}
               helperText={passwordCheckValidState ? '' : '비밀번호가 일치하지 않습니다.'}
