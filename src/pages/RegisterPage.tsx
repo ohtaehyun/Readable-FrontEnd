@@ -66,7 +66,7 @@ const RegisterPage: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await API.post('/auth/signup', formValue);
-    //리다이렉트 시키기에는 로그인 api도 로그인 페이지도 없음 ..
+    //리다이렉트 시키기에는 로그인 api도 로그인 페이지도 없음 .. 공용 에러처리 어케할지 고민 필요..
   };
 
   return (
