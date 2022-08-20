@@ -102,7 +102,7 @@ const RegisterPage: React.FC = () => {
               name="password"
               type="password"
               error={!passwordValidState}
-              helperText={passwordValidState ? '' : '잘못된 비밀번호 형식입니다.'}
+              helperText={passwordValidState ? '' : '비밀번호는 영문 대문자, 소문자, 숫자를 포함하여 8 ~ 20 자리로 설정해주세요.'}
             />
             <TextField
               margin="normal"
