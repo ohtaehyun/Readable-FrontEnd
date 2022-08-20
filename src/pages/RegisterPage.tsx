@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { regexUtil } from '../util/regex';
 import API from '../api/api';
 
-interface EmailExistResponse {
+interface IEmailExistResponse {
   exist: boolean;
 }
 
@@ -59,7 +59,7 @@ const RegisterPage: React.FC = () => {
     if (!emailValidState || !event.target.value) return;
     const response = (await API.get(
       `/auth/emailExist?email=${event.target.value}`
-    )) as EmailExistResponse;
+    )) as IEmailExistResponse;
     setEmailExistState(response.exist);
   };
 
