@@ -74,7 +74,9 @@ const RegisterPage: React.FC = () => {
 };
 
 const CardStyle = {
-  padding: '20px'
+  padding: '20px',
+  maxWidth: '400px',
+  margin: 'auto'
 };
 
 export default RegisterPage;
