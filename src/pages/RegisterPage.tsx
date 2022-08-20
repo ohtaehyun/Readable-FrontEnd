@@ -1,18 +1,72 @@
 import { Box, Button, Card, TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { regexUtil } from '../util/regex';
+import API from '../api/api';
+
+interface EmailExistResponse {
+  exist: boolean;
+}
 
 const RegisterPage: React.FC = () => {
   const navigation = useNavigate();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [formValue, setformValue] = React.useState({
+    email: '',
+    name: '',
+    password: '',
+    passwordCheck: ''
+  });
+
+  const [emailValidState, setEmailValidState] = useState(true);
+  const [emailExistState, setEmailExistState] = useState(false);
+  const [passwordValidState, setPasswordValidState] = useState(true);
+  const [passwordCheckValidState, setPasswordCheckValidState] = useState(true);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setformValue({
+      ...formValue,
+      [event.target.name]: event.target.value
+    });
+
+    if (!regexUtil.isValidEmail(formValue.email)) {
+      return setEmailValidState(false);
+    }
+
+    setEmailValidState(true);
+
+    if (!regexUtil.isValidPassword(formValue.password)) return setPasswordValidState(false);
+    setPasswordValidState(true);
+
+    if (formValue.password !== formValue.passwordCheck) return setPasswordCheckValidState(false);
+    setPasswordCheckValidState(true);
+  };
+
+  const isEmailError = (): boolean => {
+    if (!emailValidState) return true;
+    if (emailExistState) return true;
+    return false;
+  };
+
+  const emailErrorMessage = (): string => {
+    if (!emailValidState) return '잘못된 이메일 형식입니다.';
+    if (emailExistState) return '이미 가입된 이메일입니다.';
+    return '';
+  };
+
+  const handleEmailBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
+    if (!emailValidState || !event.target.value) return;
+    const response = (await API.get(
+      `/auth/emailExist?email=${event.target.value}`
+    )) as EmailExistResponse;
+    setEmailExistState(response.exist);
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const registerData = new FormData(event.currentTarget);
-    console.log(registerData.get('email'));
-    console.log(registerData.get('name'));
-    console.log(registerData.get('password'));
-    console.log(registerData.get('passwordCheck'));
+    await API.post('/auth/signup', formValue);
+    //리다이렉트 시키기에는 로그인 api도 로그인 페이지도 없음 ..
   };
 
   return (
@@ -33,6 +87,10 @@ const RegisterPage: React.FC = () => {
               autoComplete="email"
               type="email"
               autoFocus
+              error={isEmailError()}
+              onChange={handleChange}
+              onBlur={handleEmailBlur}
+              helperText={emailErrorMessage()}
             />
             <TextField
               margin="normal"
@@ -42,6 +100,7 @@ const RegisterPage: React.FC = () => {
               label="Name"
               name="name"
               autoFocus
+              onChange={handleChange}
             />
             <TextField
               margin="normal"
@@ -52,6 +111,9 @@ const RegisterPage: React.FC = () => {
               name="password"
               type="password"
               autoFocus
+              error={!passwordValidState}
+              onChange={handleChange}
+              helperText={passwordValidState ? '' : '잘못된 비밀번호 형식입니다.'}
             />
             <TextField
               margin="normal"
@@ -62,6 +124,9 @@ const RegisterPage: React.FC = () => {
               name="passwordCheck"
               type="password"
               autoFocus
+              error={!passwordCheckValidState}
+              onChange={handleChange}
+              helperText={passwordCheckValidState ? '' : '비밀번호가 일치하지 않습니다.'}
             />
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Register
