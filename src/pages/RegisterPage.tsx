@@ -24,7 +24,7 @@ const RegisterPage: React.FC = () => {
   const [passwordValidState, setPasswordValidState] = useState(true);
   const [passwordCheckValidState, setPasswordCheckValidState] = useState(true);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.BaseSyntheticEvent) => {
     setformValue({
       ...formValue,
       [event.target.name]: event.target.value
@@ -41,12 +41,6 @@ const RegisterPage: React.FC = () => {
 
     if (formValue.password !== formValue.passwordCheck) return setPasswordCheckValidState(false);
     setPasswordCheckValidState(true);
-  };
-
-  const isEmailError = (): boolean => {
-    if (!emailValidState) return true;
-    if (emailExistState) return true;
-    return false;
   };
 
   const emailErrorMessage = (): string => {
@@ -76,7 +70,7 @@ const RegisterPage: React.FC = () => {
           <Typography component="h1" variant="h5">
             Register
           </Typography>
-          <Box component={'form'} onSubmit={handleSubmit}>
+          <Box component={'form'} onSubmit={handleSubmit} onChange={handleChange}>
             <TextField
               margin="normal"
               required
@@ -87,8 +81,7 @@ const RegisterPage: React.FC = () => {
               autoComplete="email"
               type="email"
               autoFocus
-              error={isEmailError()}
-              onChange={handleChange}
+              error={!emailValidState || emailExistState}
               onBlur={handleEmailBlur}
               helperText={emailErrorMessage()}
             />
@@ -99,7 +92,6 @@ const RegisterPage: React.FC = () => {
               id="name"
               label="Name"
               name="name"
-              onChange={handleChange}
             />
             <TextField
               margin="normal"
@@ -110,7 +102,6 @@ const RegisterPage: React.FC = () => {
               name="password"
               type="password"
               error={!passwordValidState}
-              onChange={handleChange}
               helperText={passwordValidState ? '' : '잘못된 비밀번호 형식입니다.'}
             />
             <TextField
@@ -122,7 +113,6 @@ const RegisterPage: React.FC = () => {
               name="passwordCheck"
               type="password"
               error={!passwordCheckValidState}
-              onChange={handleChange}
               helperText={passwordCheckValidState ? '' : '비밀번호가 일치하지 않습니다.'}
             />
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
