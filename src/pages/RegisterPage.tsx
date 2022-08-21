@@ -23,24 +23,34 @@ const RegisterPage: React.FC = () => {
   const [emailExistState, setEmailExistState] = useState(false);
   const [passwordValidState, setPasswordValidState] = useState(true);
   const [passwordCheckValidState, setPasswordCheckValidState] = useState(true);
+  type IInputType = 'email' | 'password' | 'passwordCheck' | 'name';
 
   const handleChange = (event: React.BaseSyntheticEvent) => {
+    
+    const inputType = event.target.name as IInputType;
+    const inputValue = event.target.value;
+
     setformValue({
       ...formValue,
-      [event.target.name]: event.target.value
+      [inputType]: inputValue
     });
 
-    if (!regexUtil.isValidEmail(formValue.email)) {
-      return setEmailValidState(false);
+    switch (inputType) {
+      case 'email':
+        setEmailValidState(regexUtil.isValidEmail(inputValue));
+        break;
+      case 'password':
+        setPasswordValidState(regexUtil.isValidPassword(inputValue));
+        setPasswordCheckValidState(inputValue === formValue.passwordCheck)
+        break;
+      case 'passwordCheck':
+        setPasswordCheckValidState(formValue.password === inputValue)
+        break;
+      case 'name':
+        break;
+      default:
+        break;
     }
-
-    setEmailValidState(true);
-
-    if (!regexUtil.isValidPassword(formValue.password)) return setPasswordValidState(false);
-    setPasswordValidState(true);
-
-    if (formValue.password !== formValue.passwordCheck) return setPasswordCheckValidState(false);
-    setPasswordCheckValidState(true);
   };
 
   const emailErrorMessage = (): string => {
