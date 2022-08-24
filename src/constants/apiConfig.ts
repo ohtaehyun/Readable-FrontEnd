@@ -1,2 +1,2 @@
-export const API_URL = '';
-export const API_PORT = '';
+export const API_URL = 'http://localhost';
+export const API_PORT = '3100';
