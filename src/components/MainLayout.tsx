@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { MainMenuItemList } from '../constants/mainMenuItemList';
 
 const MainLayout: React.FC = () => {
-  const [idx, setIdx] = useState<string>(localStorage.getItem('navIdx') || '/');
+  const [idx, setIdx] = useState<string>(sessionStorage.getItem('navIdx') || '/');
   const [showSideMenu, setShowSideMenu] = useState(false);
 
   const matches = useMediaQuery('(max-width:650px)', { noSsr: true });
@@ -27,7 +27,7 @@ const MainLayout: React.FC = () => {
   }, [matches]);
 
   useEffect(() => {
-    localStorage.setItem('navIdx', idx);
+    sessionStorage.setItem('navIdx', idx);
   }, [idx]);
 
   const NavBar = () => {
