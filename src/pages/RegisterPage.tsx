@@ -1,4 +1,4 @@
-import { Box, Button, Card, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -75,7 +75,7 @@ const RegisterPage: React.FC = () => {
   return (
     <Grid2 container justifyContent={'center'}>
       <Grid2 xs={6}>
-        <Box style={CardStyle}>
+        <Box style={maxWidth}>
           <Typography component="h1" variant="h5">
             Readable
           </Typography>
@@ -144,7 +144,7 @@ const RegisterPage: React.FC = () => {
   );
 };
 
-const CardStyle = {
+const maxWidth = {
   padding: '20px',
   maxWidth: '400px',
   margin: 'auto'
