@@ -28,7 +28,6 @@ const RegisterPage: React.FC = () => {
   const handleChange = (event: React.BaseSyntheticEvent) => {
     const inputType = event.target.name as IInputType;
     const inputValue = event.target.value;
-
     setformValue({
       ...formValue,
       [inputType]: inputValue
