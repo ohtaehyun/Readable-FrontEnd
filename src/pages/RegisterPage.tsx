@@ -1,4 +1,4 @@
-import { Box, Button, Card, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ interface IEmailExistResponse {
 }
 
 const RegisterPage: React.FC = () => {
-  const navigation = useNavigate();
+  useNavigate();
 
   const [formValue, setformValue] = React.useState({
     email: '',
@@ -26,10 +26,8 @@ const RegisterPage: React.FC = () => {
   type IInputType = 'email' | 'password' | 'passwordCheck' | 'name';
 
   const handleChange = (event: React.BaseSyntheticEvent) => {
-    
     const inputType = event.target.name as IInputType;
     const inputValue = event.target.value;
-
     setformValue({
       ...formValue,
       [inputType]: inputValue
@@ -41,10 +39,10 @@ const RegisterPage: React.FC = () => {
         break;
       case 'password':
         setPasswordValidState(regexUtil.isValidPassword(inputValue));
-        setPasswordCheckValidState(inputValue === formValue.passwordCheck)
+        setPasswordCheckValidState(inputValue === formValue.passwordCheck);
         break;
       case 'passwordCheck':
-        setPasswordCheckValidState(formValue.password === inputValue)
+        setPasswordCheckValidState(formValue.password === inputValue);
         break;
       case 'name':
         break;
@@ -76,9 +74,9 @@ const RegisterPage: React.FC = () => {
   return (
     <Grid2 container justifyContent={'center'}>
       <Grid2 xs={6}>
-        <Card style={CardStyle}>
+        <Box style={maxWidth}>
           <Typography component="h1" variant="h5">
-            Register
+            Readable
           </Typography>
           <Box component={'form'} onSubmit={handleSubmit} onChange={handleChange}>
             <TextField
@@ -94,6 +92,7 @@ const RegisterPage: React.FC = () => {
               error={!emailValidState || emailExistState}
               onBlur={handleEmailBlur}
               helperText={emailErrorMessage()}
+              variant="standard"
             />
             <TextField
               margin="normal"
@@ -102,6 +101,7 @@ const RegisterPage: React.FC = () => {
               id="name"
               label="Name"
               name="name"
+              variant="standard"
             />
             <TextField
               margin="normal"
@@ -112,7 +112,12 @@ const RegisterPage: React.FC = () => {
               name="password"
               type="password"
               error={!passwordValidState}
-              helperText={passwordValidState ? '' : '비밀번호는 영문 대문자, 소문자, 숫자를 포함하여 8 ~ 20 자리로 설정해주세요.'}
+              helperText={
+                passwordValidState
+                  ? ''
+                  : '비밀번호는 영문 대문자, 소문자, 숫자를 포함하여 8 ~ 20 자리로 설정해주세요.'
+              }
+              variant="standard"
             />
             <TextField
               margin="normal"
@@ -124,18 +129,21 @@ const RegisterPage: React.FC = () => {
               type="password"
               error={!passwordCheckValidState}
               helperText={passwordCheckValidState ? '' : '비밀번호가 일치하지 않습니다.'}
+              variant="standard"
             />
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-              Register
-            </Button>
+            <Box display="flex" justifyContent="flex-end">
+              <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }} size="large">
+                Register
+              </Button>
+            </Box>
           </Box>
-        </Card>
+        </Box>
       </Grid2>
     </Grid2>
   );
 };
 
-const CardStyle = {
+const maxWidth = {
   padding: '20px',
   maxWidth: '400px',
   margin: 'auto'
