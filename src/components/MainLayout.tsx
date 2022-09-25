@@ -20,6 +20,10 @@ const MainLayout: React.FC = () => {
     setShowSideMenu(showSideMenu => !showSideMenu);
   };
 
+  const loginButtonClickHandler=(event: React.SyntheticEvent<Element, Event>)=>{
+    handleIndexChange(event,"login");
+  }
+
   useEffect(() => {
     if (!matches) {
       setShowSideMenu(false);
@@ -48,7 +52,7 @@ const MainLayout: React.FC = () => {
             paddingRight: '24px'
           }}
         >
-          <Button>Login|UserInfo</Button>
+          <Button onClick={loginButtonClickHandler}>Login|UserInfo</Button>
         </Box>
       </>
     );
