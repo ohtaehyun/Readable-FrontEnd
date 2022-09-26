@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
 import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route path="register" element={<RegisterPage />} />
+          <Route path="login" element={<LoginPage/>}/>
           <Route path="hi" element={<div>hi</div>} />
           <Route
             path="*"
